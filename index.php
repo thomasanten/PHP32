@@ -20,8 +20,7 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
 	<script src="js/chart/Chart.js"></script>
 	<style>
 	.canvas-holder{
-		height: 50%;
-		width: 50%;
+		padding: 5rem;
 	}
 	.#chart-weigth{
 		/*max-heigth: 10rem!important;
@@ -49,7 +48,7 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
  
 	<section class="row fullWidth bgwhite">
         <div class="small-10 small-centered text-center columns">
-            <div class="large-3 large-centered columns">
+            <div class="large-6 large-centered columns">
               <div class="login-box">
               <div class="row">
              <div class="large-12 columns">
@@ -58,20 +57,16 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
               <div class="large-12 columns">
                 <form>
                    <div class="row">
-                     <div class="large-12 columns">
-                         <input type="text" id="username" name="username" placeholder="Username" />
+                     <div class="large-4 columns">
+                        <input type="text" id="username" name="username" placeholder="Username" />
                      </div>
-                   </div>
-                  <div class="row">
-                     <div class="large-12 columns">
+                     <div class="large-4 columns">
                          <input type="password" id="password" name="password" placeholder="Password" />
                      </div>
-                  </div>
-                  <div class="row">
-                    <div class="large-6 columns">
+                    <div class="large-2 columns">
                       <input type="submit" id="submit" class="button expand" value="Log In"/>
                     </div>
-                    <div class="large-6 columns">
+                    <div class="large-2 columns">
                         <a href="#" data-reveal-id="regModal" >Register</a>
                     </div>
                   </div>
@@ -147,12 +142,26 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
             </section>
             <section style="background-color:#ecf0f1;">
                 <div class="small-10 small-centered text-center columns">
-                    <h2>Weigth</h2>
+                    <h2>Hair</h2>
+                    <div class="row">
+                        <div class="name-field large-3 columns">
+                            <img src="img/hair_l.png" alt="Long hair" />
+                        </div>
+                         <div class="name-field large-3 columns">
+                            <img src="img/hair_m.png" alt="Long hair" />
+                        </div>
+                        <div class="name-field large-3 columns">
+                            <img src="img/hair_s.png" alt="Long hair" />
+                        </div>
+                        <div class="name-field large-3 columns">
+                            <img src="img/hair_b.png" alt="Long hair" />
+                        </div> 
+                    </div>                  
                 </div>
             </section>
             <section>
-                <div class="small-10 small-centered columns">
-                    <h2>Sex</h2>
+                <div class="small-10 small-centered text-center columns">
+                    <h2>Gender</h2>
                 </div>
             </section>
   	</section>

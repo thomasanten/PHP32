@@ -270,3 +270,27 @@ hr.fancy-line:after {
 .divider:after{
     margin:0 -55% 0 2%;
 }
+
+/* LOGIN */
+.login-box{
+	padding: 5px;
+}
+.login-box input[type=text], .login-box input[type=password]{
+	padding: 25px 10px!important;
+	margin: 0px;
+}
+, .login-box input[type=submit]{
+	margin: 0px;
+	padding: 0px;
+}
+.login-box a{
+    display: block;
+	height: auto;
+	padding-top: 12px;
+	height: auto;
+}
+
+.averageAge{
+	font-size: 100px;
+	animation:ease;
+}

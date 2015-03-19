@@ -176,9 +176,9 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                 <div class="row">
                   <div class="large-4 columns">
                     <div class="row collapse">
-                      <label for="regSex">Your sex <small>required</small>
+                      <label for="regSex">Your gender <small>required</small>
                         <select id="regSex" name="regSex" class="medium" required>
-                          <option value="">Select your sex</option>
+                          <option value="">Select your gender</option>
                           <option value="female">Female</option>
                           <option value="male">Male</option>
                           <option value="both">Both</option>
@@ -193,12 +193,7 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                   <div class="large-4 columns">
                     <div class="row collapse">
                       <label for="regAge">Your age <small>required</small>
-                        <select id="regAge" name="regAge" class="medium" required>
-                          <option value="">Select your age</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                        </select>
+                      	<input id="regAge" name="regAge" class="medium" type="number" size="6" min="18" max="99" value="21">
                       </label>
                       <small class="error">Broke.</small>
                     </div>
@@ -208,9 +203,9 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                 <div class="row">
                   <div class="large-4 columns">
                     <div class="row collapse">
-                      <label for="regHcolor">Your haircolor <small>required</small>
+                      <label for="regHcolor">Your hair color <small>required</small>
                         <select id="regHcolor" name="regHcolor" class="medium" required>
-                          <option value="">Select your haircolor</option>
+                          <option value="">Select your hair color</option>
                           <option value="black">Black</option>
                           <option value="brown">Brown</option>
                           <option value="blond">Blond</option>
@@ -226,9 +221,9 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                   
                   <div class="large-4 left columns">
                     <div class="row collapse">
-                      <label for="regHlength">Your hairlength <small>required</small>
+                      <label for="regHlength">Your hair length <small>required</small>
                         <select id="regHlength" name="regHlength" class="medium" required>
-                          <option value="">Select your hairlength</option>
+                          <option value="">Select your hair length</option>
                           <option value="long">Long</option>
                           <option value="second">Medium</option>
                           <option value="short">Short</option>
@@ -244,9 +239,9 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                 <div class="row">
                   <div class="large-4 columns">
                     <div class="row collapse">
-                      <label for="regEcolor">Your eyecolor <small>required</small>
+                      <label for="regEcolor">Your eye color <small>required</small>
                         <select id="regEcolor" name="regEcolor" class="medium" required>
-                          <option value="">Select your eyecolor</option>
+                          <option value="">Select your eye color</option>
                           <option value="amber">Amber</option>
                           <option value="blue">Blue</option>
                           <option value="brown">Brown</option>
@@ -396,14 +391,14 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
           <thead>
             <tr>
               <th>Age</th>
-              <th>Sex</th>
-              <th>Haircolor</th>
-              <th>Hairlength</th>
-              <th>Eyecolor</th>
+              <th>Gender</th>
+              <th>Hair color</th>
+              <th>Hair length</th>
+              <th>Eye color</th>
               <th>Weigth</th>
               <th>Length</th>
-              <th>Bodytype</th>
-              <th>Shoesize</th>
+              <th>Body type</th>
+              <th>Shoe size</th>
               <th>Smoker</th>
             </tr>
           </thead>
