@@ -2,10 +2,10 @@
 include 'library.php';
 // Check if the user is logged in, else redirect them to index.php
 if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
-	echo '<script type="text/javascript">window.location = "index.php"; </script>';
+	echo '<script type="text/javascript">window.location = "index.php";</script>';
 }else{
 	// Set user ID
-	$userId = $_SESSION['userid'];
+	$userId 	= $_SESSION['userid'];
 }
 ?>
 <!doctype html>
@@ -35,24 +35,30 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
 </section>
 <hr class="fancy-line">
 </hr>
-<div class="contain-to-grid sticky">
-  <nav class="top-bar" data-topbar role="navigation" data-options="sticky_on: large">
-    <ul class="title-area">
-      <li class="name">
-        <h1><a href="#"><img src="" /></a></h1>
-      </li>
-      <li class="toggle-topbar menu-icon"><a href="#"></a></li>
-    </ul>
-    <section class="top-bar-section">
-      <ul class="right">
-        <li class="has-form"><a href="logout.php" class="a">logout</a></li>
-      </ul>
-      <ul class="left">
-        <li>Welcome, <?php echo ucfirst($_SESSION['username']); ?>.</li>
-      </ul>
-    </section>
-  </nav>
-</div>
+      <div class="contain-to-grid sticky">
+        <nav class="top-bar" data-topbar role="navigation" data-options="sticky_on: large">
+        <ul class="title-area">
+          <li class="name">
+            <h1><a href="#"><img src="" /></a></h1>
+          </li>
+          <li class="toggle-topbar menu-icon"><a href="#"></a></li>
+        </ul>
+        <section class="top-bar-section">
+        <ul class="right">
+          <li class="has-dropdown">
+            <a href="#">Menu</a>
+            <ul class="dropdown">
+              <li><a href="index.php">Index</a></li>
+              <li class="active"><a href="logout.php" class="a">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+          <ul class="left">
+            <li>Welcome, <?php echo ucfirst($_SESSION['username']); ?>.</li>
+          </ul>
+        </section>
+        </nav>
+        </div>
 <section class="row bgwhite">
   <?php
 	$stmt = $dbh->prepare('SELECT * FROM userData WHERE id=:userid');
@@ -60,6 +66,12 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
 	$stmt->execute();
 	$stmtData = $stmt->fetchAll();
 	$stmtNo	=	$stmt->rowCount(); // Counting the rows that match the given parameters; username
+
+	$stmtId = $dbh->prepare("SELECT * FROM users WHERE id=:userid");
+	$stmtId->bindParam(":userid",$userId);
+	$stmtId->execute();
+	$stmtIdData = $stmtId->fetchAll(PDO::FETCH_ASSOC);
+	$regStatus = $stmtIdData[0]['userStatus'];
 
 	if($stmtNo <= 0){// If 0 rows	
 	?>
@@ -72,100 +84,93 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
 		if (isset($_POST['submit'])) {
 			
 			// Check if a file is selected for upload
+			$mimes = array('application/vnd.ms-excel','text/plain','text/csv','text/tsv');
 			if($_FILES["filename"]["error"] == 4){
-				echo '<p>Er is geen CSV bestand aangetroffen... Probeer het eens opnieuw!</p>';
+				echo '<p>No csv file found... Try it again!</p>';
 			}else{
+				if(in_array($_FILES['filename']['type'],$mimes)){
 			
-			/*	
-			if (is_uploaded_file($_FILES['filename']['tmp_name'])) {
-				echo "<h1>" . "File ". $_FILES['filename']['name'] ." uploaded successfully." . "</h1>";
-				echo "<h2>Displaying contents:</h2>";
-				readfile($_FILES['filename']['tmp_name']);
-			}
-			*/
+				//Import uploaded file to Database
+				$handle = fopen($_FILES['filename']['tmp_name'], "r");
+				
+				//Loop trough the ; seperated data
+				while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
 			
-			//Import uploaded file to Database
-			$handle = fopen($_FILES['filename']['tmp_name'], "r");
-			
-			//Loop trough the ; seperated data
-			while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-		
-			//Prepare the a query with the data pulled out of the CSV
-			$stmt = $dbh->prepare("INSERT INTO userData(
-							id,
-							regSex,
-							regAge,
-							regHcolor,
-							regEcolor,
-							regHlength,
-							regWeigth,
-							regBody,
-							regLength,
-							regSmoker,
-							regSsize,
-							regRemarks) VALUES (
-							:id,  
-							:regSex,
-							:regAge,
-							:regHcolor,
-							:regEcolor,
-							:regHlength,
-							:regWeigth,
-							:regBody,
-							:regLength,
-							:regSmoker,
-							:regSsize,
-							:regRemarks)");
-														  
-				$stmt->bindParam(':id', $_SESSION['userid']);       
-				$stmt->bindParam(':regSex', $data[0]);       
-				$stmt->bindParam(':regAge', $data[1]); 
-				$stmt->bindParam(':regHcolor', $data[2]);
-				$stmt->bindParam(':regEcolor', $data[3]); 
-				$stmt->bindParam(':regHlength', $data[4]);
-				$stmt->bindParam(':regWeigth', $data[5]);       
-				$stmt->bindParam(':regBody', $data[6]); 
-				$stmt->bindParam(':regLength', $data[7]);
-				$stmt->bindParam(':regSmoker', $data[8]); 
-				$stmt->bindParam(':regSsize', $data[9]);
-				$stmt->bindParam(':regRemarks', $data[10]);
-
-				}
-				// Check if ececution went good, show the outcome..
-				if (	$stmt->execute()) {
-					?>
-						<div class="small-10 large-centered text-center columns">
-							<h3>Succes!</h3>
-						</div>
-					</section>
-      <?
-				} else {
-					?>
-					<section class="row fullWidth">
-						<div class="small-10 large-centered text-center columns">
-							<h3>OOOOops!</h3>
-                           	<?php
-							// Check if there's a CSV uploaded..
-							$mimes = array('application/vnd.ms-excel','text/plain','text/csv','text/tsv');
-							if(in_array($_FILES['filename']['type'],$mimes)){
-								echo '<p>Something went ugly wrong!</p>';
-							}else{
-								echo '<p>We detected a non-csv thingy, please upload a csv doc!</p>';
-							}
-							?>
-						</div>
-					</section>
-      <?
+				//Prepare the a query with the data pulled out of the CSV
+				$stmt = $dbh->prepare("INSERT INTO users(
+								Username,
+								Password,
+								regFname,
+								regLname,
+								userStatus,
+								regRemarks) VALUES (
+								:Username,
+								:Password,
+								:regFname,
+								:regLname,
+								:regStatus,
+								:regRemarks)");
+					
+					$Password = base64_encode(base64_encode(base64_encode($data[1])));		  
+					$stmt->bindParam(':Username', $data[0]);
+					$stmt->bindParam(':Password', $Password);            
+					$stmt->bindParam(':regFname', $data[2]); 
+					$stmt->bindParam(':regLname', $data[3]);
+					$stmt->bindParam(':regStatus', $data[4]); 
+					$stmt->bindParam(':regRemarks', $data[5]);
+					
+					}
+					// Check if ececution went good, show the outcome..
+					if ($stmt->execute()) {
+						?>
+							<div class="small-10 large-centered text-center columns">
+								<h1>Succes!</h1>
+                                <p>User added..</p>
+							</div>
+						</section>
+		  <?php
+					} else {
+						?>
+						<section class="row fullWidth">
+							<div class="small-10 large-centered text-center columns">
+								<h3>OOOOops!</h3>
+								<?php
+								// Check if there's a CSV uploaded..
+								$mimes = array('application/vnd.ms-excel','text/plain','text/csv','text/tsv');
+								if(in_array($_FILES['filename']['type'],$mimes)){
+									echo '<p>Something went ugly wrong!</p>';
+								}else{
+									echo '<p>We detected a non-csv thingy, please upload a csv doc!</p>';
+								}
+								?>
+							</div>
+						</section>
+		  <?php
+					}
+				fclose($handle);
+				}else{
+			?>
+                <section class="row fullWidth">
+                    <div class="small-10 large-centered text-center columns">
+                        <h3>OOOOops!</h3>
+						<p>Something went ugly wrong!</p>
+                        <p>We detected a non-csv thingy, please upload a csv doc!</p>
+                        <p><a href="userpage.php" class="button">Go Back</a></p>
+                    </div>
+                </section>            
+            <?php					
 				}
 			}
 			// Close the file pointer
-			fclose($handle);
 		}else {
 			unset($_POST['submit']);
-			
-			print'<p>No data added yet! Tell us more about yourself by adding it Manually or by uploading a <a href="#" data-reveal-id="csvForm">CSV&hellip;</a> file!</p>';
+			if($regStatus === 'admin'){
+				print'<p>No data added yet! Tell us more about yourself by adding it Manually.. Or add an user by uploading a <a href="#" data-reveal-id="csvForm">CSV&hellip;</a> file!</p>';	
+			}else{
+				print'<p>No data added yet! Tell us more about yourself by adding it Manually!</p>';
+			}
 				?>
-             <form data-abide method="post" action="register.php"> 
+             <form data-abide method="post" action="registerData.php"> 
  
                 <div class="row">
                     <div class="large-12 columns">
@@ -369,7 +374,7 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                 <?php
 		}
 ?>
-    <div id="csvForm" class="reveal-modal" data-reveal><h2>This is a modal.</h2>
+    <div id="csvForm" class="reveal-modal" data-reveal><h2>Add a new user.</h2>
         <p>Upload new csv by browsing to file and clicking on Upload</p>
         <form enctype='multipart/form-data' action='userpage.php' method='post'>   
             <input size='50' type='file' name='filename'><br />
@@ -427,11 +432,6 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
 	}
 			
 			?>
-  <section class="row " style="background-color:#ecf0f1;">
-    <div class="small-10 small-centered columns">
-      <h2>Games</h2>
-    </div>
-  </section>
 </section>
 <br/>
 </div>

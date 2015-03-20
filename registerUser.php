@@ -1,11 +1,8 @@
 <?php
 include 'library.php';
-if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secured user page if user logged in
-	echo '<script type="text/javascript">window.location = "userpage.php"; </script>';
-}
 
 // Encrypt the password 3 times
-function encrypt($string){
+function encrypt($string){	
 	return base64_encode(base64_encode(base64_encode($string)));
 }
 
@@ -79,8 +76,7 @@ $regLname	= $_POST['regLname'];
 	$stmt->execute();
 	$stmtNo	=	$stmt->rowCount(); // Counting the rows that match the given parameters; username
 
-	if($stmtNo <= 0)// If 0 rows
-	{
+	if($stmtNo <= 0){
 		$stmt = $dbh->prepare("INSERT INTO users(
 					Username,
 					Password,
@@ -99,45 +95,40 @@ $regLname	= $_POST['regLname'];
 
 		//$stmt->debugDumpParams();
 	
-		if (	$stmt->execute()) {
+		if ($stmt->execute()){
           	?> 
           	<section class="row fullWidth">
                 <div class="small-10 large-centered text-center columns">
                     <h2>Succes!</h2>
                     <p>Registration was a success! You are now logged in.</p>
-                    <p>Next time login with username <strong><?php echo $Username ?> </strong> and password <strong><?php echo decrypt($Password); ?></strong>.</strong></p>
-                    <p><a href="#" class="button">Go Back</a></p>
+                    <p>Next time login with username <strong><?php echo $Username ?> </strong> and password <strong><?php echo decrypt($Password) ?></strong>.</strong></p>
+                    <p><a href="index.php" class="button">Go Back</a></p>
                 </div>
             </section>
-            <?
+            <?php
 			$stmtResult = $stmt->fetch(PDO::FETCH_ASSOC);
-
 			$_SESSION['userid'] 		= $stmtResult['id'];
 			$_SESSION['username'] 	= $stmtResult['Username'];
-		} else {
+			} else {
           	?> 
 			<section class="row fullWidth">
                 <div class="small-10 large-centered text-center columns">
                     <h2>OOOOops!</h2>
                     <p>Something went ugly wrong!</p>
-                    <p><a href="#" class="button">Go Back</a></p>
+                    <p><a href="index.php" class="button">Go Back</a></p>
                 </div>
             </section>
-            <?
-		}
-		//$stmt->close();
-	}else{ 
-		?>
+            <?php }
+				//$stmt->close(); 
+			}else{ ?>
           	<section class="row fullWidth">
                 <div class="small-10 large-centered text-center columns">
                     <h2>Error!</h2>
                     <p>Registration wasn't a succes! This email address is already registered, use another one...</p>
-                    <p><a href="#" class="button">Go Back</a></p>
+                    <p><a href="index.php" class="button">Go Back</a></p>
                 </div>
             </section>
-        <?
-	}
-	?>
+        <?php } ?>
    
   	</section>
     

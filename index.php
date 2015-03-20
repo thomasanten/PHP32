@@ -5,6 +5,7 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
 	echo '<script type="text/javascript">window.location = "userpage.php"; </script>';
 }
 */
+
 ?>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -21,10 +22,6 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
 	<style>
 	.canvas-holder{
 		padding: 5rem;
-	}
-	.#chart-weigth{
-		/*max-heigth: 10rem!important;
-		width: 10rem;*/
 	}
     </style>
 </head>
@@ -47,7 +44,37 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
     <hr class="fancy-line"></hr>
  
 	<section class="row fullWidth bgwhite">
-        <div class="small-10 small-centered text-center columns">
+    <?php
+	if(isset($_SESSION['userid'])){
+	?>
+      <div class="contain-to-grid sticky">
+        <nav class="top-bar" data-topbar role="navigation" data-options="sticky_on: large">
+        <ul class="title-area">
+          <li class="name">
+            <h1><a href="#"><img src="" /></a></h1>
+          </li>
+          <li class="toggle-topbar menu-icon"><a href="#"></a></li>
+        </ul>
+        <section class="top-bar-section">
+        <ul class="right">
+          <li class="has-dropdown">
+            <a href="#">Menu</a>
+            <ul class="dropdown">
+              <li><a href="userpage.php">Userpage</a></li>
+              <li class="active"><a href="logout.php" class="a">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+          <ul class="left">
+            <li>Welcome, <?php echo ucfirst($_SESSION['username']); ?>.</li>
+          </ul>
+        </section>
+        </nav>
+        </div>
+      <?php
+	}else{
+	  ?>
+    <div class="small-10 small-centered text-center columns">
             <div class="large-6 large-centered columns">
               <div class="login-box">
               <div class="row">
@@ -76,10 +103,13 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
             </div>
             </div>
         </div>
+        <?php
+		}
+		?>
         <div id="regModal" class="reveal-modal" data-reveal>
           <h2>Register Yourself</h2>
           <p>Tell us more about yourself by registering...</p>
-             <form data-abide method="post" action="register.php">
+             <form data-abide method="post" action="registerUser.php">
               <div class="name-field large-6 columns">
                 <label>Your firstname <small>required</small>
                   <input type="text" name="regFname" required pattern="[a-zA-Z]+">
@@ -162,6 +192,42 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
             <section>
                 <div class="small-10 small-centered text-center columns">
                     <h2>Gender</h2>
+                       <div class="name-field large-6 columns">
+							Men
+                        </div>
+                       <div class="name-field large-6 columns">
+							Woman
+                        </div>
+                </div>
+            </section>
+            <section>
+                <div class="small-10 small-centered text-center columns">
+                    <h2>News</h2>
+					<?php
+                        $rss = new DOMDocument();
+                        $rss->load('http://www.menshealth.com/events-promotions/washpofeed');
+                        $feed = array();
+                        foreach ($rss->getElementsByTagName('item') as $node) {
+                            $item = array ( 
+                                'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
+                                'desc' => $node->getElementsByTagName('description')->item(0)->nodeValue,
+                                'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
+                                'date' => $node->getElementsByTagName('pubDate')->item(0)->nodeValue,
+                                );
+                            array_push($feed, $item);
+                        }
+                        $limit = 3;
+                        for($x=0;$x<$limit;$x++) {
+                            $title = str_replace(' & ', ' &amp; ', $feed[$x]['title']);
+                            $link = $feed[$x]['link'];
+                            $description = $feed[$x]['desc'];
+                            $date = date('l F d, Y', strtotime($feed[$x]['date']));
+                            echo '<div class="name-field large-4 columns">';
+                            echo '<p><strong><a href="'.$link.'" title="'.$title.'">'.$title.'</a></strong><br />';
+                            echo '<small><em>Posted on '.$date.'</em></small></p>';
+                            echo '</div>';
+                        }
+                    ?>
                 </div>
             </section>
   	</section>
