@@ -92,8 +92,6 @@ $regLname	= $_POST['regLname'];
 		$stmt->bindParam(':Password', $Password);
 		$stmt->bindParam(':regFname', $regFname); 
 		$stmt->bindParam(':regLname', $regLname);
-
-		//$stmt->debugDumpParams();
 	
 		if ($stmt->execute()){
           	?> 

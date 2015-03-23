@@ -71,7 +71,7 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
 	$stmtId->bindParam(":userid",$userId);
 	$stmtId->execute();
 	$stmtIdData = $stmtId->fetchAll(PDO::FETCH_ASSOC);
-	$regStatus = $stmtIdData[0]['userStatus'];
+	$regStatus = $stmtIdData[0]['userStatus']; // Get the userstates of the user just logged in (on admin rights).
 
 	if($stmtNo <= 0){// If 0 rows	
 	?>
@@ -198,7 +198,7 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                   <div class="large-4 columns">
                     <div class="row collapse">
                       <label for="regAge">Your age <small>required</small>
-                      	<input id="regAge" name="regAge" class="medium" type="number" size="6" min="18" max="99" value="21">
+                      	<input id="regAge" name="regAge" pattern="max_age" class="medium" type="number" size="6" min="18" max="99" value="21">
                       </label>
                       <small class="error">Broke.</small>
                     </div>
@@ -268,13 +268,13 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                       <label for="regWeigth">Your weigth <small>required</small>
                         <select id="regWeigth" name="regWeigth" class="medium" required>
                           <option value="">Select your weigth in kg</option>
-                          <option value="50-60">50-60</option>
+                          <option value="50-60">60 or less</option>
                           <option value="60-70">60-70</option>
                           <option value="70-80">70-80</option>
                           <option value="80-90">80-90</option>
                           <option value="90-100">90-100</option>
                           <option value="100-110">100-110</option>
-                          <option value="100+">100+</option>
+                          <option value="100+">100 or more</option>
                         </select>
                       </label>
                       <small class="error">Broke.</small>
@@ -303,6 +303,7 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                   <div class="large-4 columns">
                     <div class="row collapse">
                       <label for="regLength">Your length (CM) <small>required</small>
+                          <!--<input type="number" pattern="max_length" id="regLength" name="regLength" min="150" max="220" required>!-->
                           <input type="number" id="regLength" name="regLength" min="150" max="220" required>
                       </label>
                       <small class="error">Broke.</small>
@@ -317,8 +318,8 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                         <select id="regSmoker" name="regSmoker" class="medium" required>
                           <option value="">Select your state</option>
                           <option value="yes">Yes</option>
-                          <option value="sometimes">Sometimes</option>
-                          <option value="socially">Socially</option>
+                          <option value="sometimes">Sometimes, les than a pack per month</option>
+                          <option value="socially">Socially, more than a pack per month</option>
                           <option value="never">Never</option>
                         </select>
                       </label>
@@ -440,7 +441,16 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
 	<script src="js/foundation/foundation.abide.js"></script>
 
 <script>
-      $(document).foundation();
+	$(document).foundation();
+$(document)
+  .foundation({
+    abide : {
+      patterns: {
+        max_age: /^[0-9-]{0,2}$/,
+        //max_length:/^([150-220]{3})([0-9]{3})$/
+      }
+    }
+  });
 	</script>
 </body>
 </html>

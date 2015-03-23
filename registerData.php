@@ -14,6 +14,7 @@ function decrypt($string){
 	return base64_decode(base64_decode(base64_decode($string)));
 }
 
+// Collect these Session data and save it into vars.
 $userid		= $_SESSION['userid'];
 $username	= $_SESSION['username'];
 $regSex		= $_POST['regSex']; 
@@ -25,7 +26,8 @@ $regWeigth	= $_POST['regWeigth'];
 $regBody	= $_POST['regBody']; 
 $regLength	= $_POST['regLength']; 
 $regSmoker	= $_POST['regSmoker']; 
-$regSsize	= $_POST['regSsize']; 
+$regSsize	= $_POST['regSsize'];
+// Check if this specific post isn't set
 if(!isset($_POST['regRemarks'])){ $regRemarks = 'Geen omschrijving!';}else{ $regRemarks = $_POST['regRemarks'];}	
 
 ?>
@@ -112,8 +114,6 @@ if(!isset($_POST['regRemarks'])){ $regRemarks = 'Geen omschrijving!';}else{ $reg
 		$stmt->bindParam(':regSmoker', $regSmoker);
 		$stmt->bindParam(':regSsize', $regSsize); 
 		$stmt->bindParam(':regRemarks', $regRemarks);
-
-		//$stmt->debugDumpParams();
 	
 		if ($stmt->execute()){
           	?> 
@@ -126,8 +126,6 @@ if(!isset($_POST['regRemarks'])){ $regRemarks = 'Geen omschrijving!';}else{ $reg
             </section>
             <?php
 			$stmtResult = $stmt->fetch(PDO::FETCH_ASSOC);
-			//$_SESSION['userid'] 		= $stmtResult['id'];
-			//$_SESSION['username'] 	= $stmtResult['Username'];
 			} else {
           	?> 
 			<section class="row fullWidth">

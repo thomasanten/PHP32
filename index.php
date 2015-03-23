@@ -1,11 +1,5 @@
 <?php
 include 'library.php';
-/*
-if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secured user page if user logged in
-	echo '<script type="text/javascript">window.location = "userpage.php"; </script>';
-}
-*/
-
 ?>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -45,6 +39,7 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
  
 	<section class="row fullWidth bgwhite">
     <?php
+	// If session with id userid is set, show a menu
 	if(isset($_SESSION['userid'])){
 	?>
       <div class="contain-to-grid sticky">
@@ -73,6 +68,7 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
         </div>
       <?php
 	}else{
+		// If there is no session set, show the login/register option
 	  ?>
     <div class="small-10 small-centered text-center columns">
             <div class="large-6 large-centered columns">
@@ -204,6 +200,7 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
                 <div class="small-10 small-centered text-center columns">
                     <h2>News</h2>
 					<?php
+						// Function to load rss data from menshealth into an array
                         $rss = new DOMDocument();
                         $rss->load('http://www.menshealth.com/events-promotions/washpofeed');
                         $feed = array();
@@ -216,6 +213,7 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
                                 );
                             array_push($feed, $item);
                         }
+						// Cycle 3 times (limit) through the for loop, so it wil get the first 3 childs out of the array
                         $limit = 3;
                         for($x=0;$x<$limit;$x++) {
                             $title = str_replace(' & ', ' &amp; ', $feed[$x]['title']);
@@ -240,9 +238,11 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
     <script src="js/foundation.min.js"></script>
     <script>
       $(document).foundation();
-
+		
+		// this is for testing VVV
 		var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
-
+		
+		// Declare some variables
 		var jqRegAge = [];
 		var jqRegWeigth = [];
 		var jqRegId = [];
@@ -258,7 +258,7 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
 			success: function(data, textStatus, jqXHR)
 			{		
 
-				// Retreive data and bind it into an array
+				// Retreive data and bind it into an array.
 				$.each(data, function(i, val) {
 					jqRegId.push(val.id);
 					jqRegWeigth.push(val.regWeigth);
@@ -267,13 +267,13 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
 					times = i;
 				});
 				
-				// jqRegAge devided by the number of each loops 
+				// jqRegAge devided by the number of each loops.
 				jqRegAge = Math.round(jqRegAge/times);
 				
-				// Make an up counter and show it on the averageAge class
+				// Make an up counter and show it on the averageAge class.
 				$('.averageAge').each(function () {
 					$(this).prop('Counter',0).animate({
-						Counter: jqRegAge
+						Counter: jqRegAge // Use the number that has been calculated 6 lines above.
 					}, {
 						duration: 4000,
 						easing: 'swing',
@@ -335,6 +335,7 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
 					  }
 				});
 				
+				// Collect data to create the bar chart.
 				var barChartData = {
 					labels : ["50-60kg","60-70kg","70-80kg","80-90kg","90-100kg","100-110kg","110+kg"],
 					datasets : [
@@ -348,6 +349,7 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
 					]
 				}
 				
+				// Count how many haircolors the query plots, than count and combine them.
 				jQuery.each(jqRegHcolor, function(key,value) {
 				  if (!countz.hasOwnProperty(value)) {
 					countz[value] = 1;
@@ -355,46 +357,47 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
 					countz[value]++;
 				  }
 				});
-
+				
+				// Create data to fill the Piechart.
 				var doughnutData = [
 						{
-							value: countz['black'],
+							value: countz['black'], //Get the amount of haircolors out of the array of this specific color
 							color:"#F7464A",
 							highlight: "#FF5A5E",
 							label: "Black"
 						},
 						{
-							value: countz['brown'],
+							value: countz['brown'], //Get the amount of haircolors out of the array of this specific color
 							color: "#46BFBD",
 							highlight: "#5AD3D1",
 							label: "Brown"
 						},
 						{
-							value: countz['blond'],
+							value: countz['blond'], //Get the amount of haircolors out of the array of this specific color
 							color: "#FDB45C",
 							highlight: "#FFC870",
 							label: "Blond"
 						},
 						{
-							value: countz['auburn'],
+							value: countz['auburn'], //Get the amount of haircolors out of the array of this specific color
 							color: "#949FB1",
 							highlight: "#A8B3C5",
 							label: "Auburn"
 						},
 						{
-							value: countz['chestnut'],
+							value: countz['chestnut'], //Get the amount of haircolors out of the array of this specific color
 							color: "#4D5360",
 							highlight: "#616774",
 							label: "Chestnut"
 						},
 						{
-							value: countz['red'],
+							value: countz['red'], //Get the amount of haircolors out of the array of this specific color
 							color: "#4D5360",
 							highlight: "#616774",
 							label: "Red"
 						},
 						{
-							value: countz['grey/white'],
+							value: countz['grey/white'], //Get the amount of haircolors out of the array of this specific color
 							color: "#4D5360",
 							highlight: "#616774",
 							label: "Grey/White"
@@ -417,14 +420,13 @@ if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secu
 
 	function getImgs(setId) {
 	  var URL = "https://api.flickr.com/services/rest/" +  // Wake up the Flickr API gods.
-		"?method=flickr.photosets.getPhotos" +  // Get photo from a photoset. http://www.flickr.com/services/api/flickr.photosets.getPhotos.htm
-		"&api_key=623656741f0e0ec35cf8be9b5986fdd3" +  // API key. Get one here: http://www.flickr.com/services/apps/create/apply/
-		"&photoset_id=" + setId +  // The set ID.
-		"&privacy_filter=1" +  // 1 signifies all public photos.
-		"&per_page=20" + // For the sake of this example I am limiting it to 20 photos.
-		"&format=json&nojsoncallback=1";  // Er, nothing much to explain here.
+		"?method=flickr.photosets.getPhotos" +  // Get photo from a photoset
+		"&api_key=623656741f0e0ec35cf8be9b5986fdd3" +  // API key
+		"&photoset_id=" + setId +  // The set ID
+		"&privacy_filter=1" +  // 1 signifies all public photos
+		"&per_page=20" + // Limiting it to 20 photos
+		"&format=json&nojsoncallback=1";
 	
-	  // See the API in action here: http://www.flickr.com/services/api/explore/flickr.photosets.getPhotos
 	  $.getJSON(URL, function(data){
 		$.each(data.photoset.photo, function(i, item){
 			var img_src = "http://farm" + item.farm + ".static.flickr.com/" + item.server + "/" + item.id + "_" + item.secret + "_b.jpg";
