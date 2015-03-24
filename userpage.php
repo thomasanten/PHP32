@@ -34,7 +34,6 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
   </div>
 </section>
 <hr class="fancy-line">
-</hr>
       <div class="contain-to-grid sticky">
         <nav class="top-bar" data-topbar role="navigation" data-options="sticky_on: large">
         <ul class="title-area">
