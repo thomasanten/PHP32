@@ -6,7 +6,7 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
 }else{
 	// Set user ID
 	$userId 	= $_SESSION['userid'];
-}
+};
 ?>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -37,24 +37,17 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
       <div class="contain-to-grid sticky">
         <nav class="top-bar" data-topbar role="navigation" data-options="sticky_on: large">
         <ul class="title-area">
-          <li class="name">
-            <h1><a href="#"><img src="" /></a></h1>
-          </li>
-          <li class="toggle-topbar menu-icon"><a href="#"></a></li>
+            <li class="name">
+              <h1><a href="#">Welcome, <?php echo ucfirst($_SESSION['username']); ?></a></h1>
+            </li>
+             <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+            <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
         </ul>
         <section class="top-bar-section">
-        <ul class="right">
-          <li class="has-dropdown">
-            <a href="#">Menu</a>
-            <ul class="dropdown">
-              <li><a href="index.php">Index</a></li>
-              <li class="active"><a href="logout.php" class="a">Logout</a></li>
+            <ul class="right">
+                  <li><a href="index.php">Home</a></li>
+                  <li class="active"><a href="logout.php" class="a">Logout</a></li>
             </ul>
-          </li>
-        </ul>
-          <ul class="left">
-            <li>Welcome, <?php echo ucfirst($_SESSION['username']); ?>.</li>
-          </ul>
         </section>
         </nav>
         </div>
@@ -118,7 +111,7 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
 					$stmt->bindParam(':regStatus', $data[4]); 
 					$stmt->bindParam(':regRemarks', $data[5]);
 					
-					}
+					};
 					// Check if ececution went good, show the outcome..
 					if ($stmt->execute()) {
 						?>
@@ -140,12 +133,12 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
 									echo '<p>Something went ugly wrong!</p>';
 								}else{
 									echo '<p>We detected a non-csv thingy, please upload a csv doc!</p>';
-								}
+								};
 								?>
 							</div>
 						</section>
 		  <?php
-					}
+					};
 				fclose($handle);
 				}else{
 			?>
@@ -158,8 +151,8 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                     </div>
                 </section>            
             <?php					
-				}
-			}
+				};
+			};
 			// Close the file pointer
 		}else {
 			unset($_POST['submit']);
@@ -167,7 +160,7 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
 				print'<p>No data added yet! Tell us more about yourself by adding it Manually.. Or add an user by uploading a <a href="#" data-reveal-id="csvForm">CSV&hellip;</a> file!</p>';	
 			}else{
 				print'<p>No data added yet! Tell us more about yourself by adding it Manually!</p>';
-			}
+			};
 				?>
              <form data-abide method="post" action="registerData.php"> 
  
@@ -188,7 +181,7 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                           <option value="both">Both</option>
                         </select>
                       </label>
-                      <small class="error">You can't be sure about your sex.</small>
+                      <small class="error">You forgot to fill in this part of the form.</small>
                     </div>
                   </div>
                 </div>
@@ -197,9 +190,9 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                   <div class="large-4 columns">
                     <div class="row collapse">
                       <label for="regAge">Your age <small>required</small>
-                      	<input id="regAge" name="regAge" pattern="max_age" class="medium" type="number" size="6" min="18" max="99" value="21">
+                      	<input id="regAge" name="regAge" pattern="max_age" class="medium" type="number" size="6" min="18" max="99">
                       </label>
-                      <small class="error">Broke.</small>
+                      <small class="error">You forgot to fill in this part of the form.</small>
                     </div>
                   </div>
                 </div>
@@ -210,16 +203,16 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                       <label for="regHcolor">Your hair color <small>required</small>
                         <select id="regHcolor" name="regHcolor" class="medium" required>
                           <option value="">Select your hair color</option>
-                          <option value="black">Black</option>
-                          <option value="brown">Brown</option>
-                          <option value="blond">Blond</option>
                           <option value="auburn">Auburn</option>
+                          <option value="black">Black</option>
+                          <option value="blond">Blond</option>
+                          <option value="brown">Brown</option>
                           <option value="chestnut">Chestnut</option>
-                          <option value="red">Red</option>
                           <option value="greywhite">Grey/White</option>
+                          <option value="red">Red</option>
                         </select>
                       </label>
-                      <small class="error">Broke.</small>
+                      <small class="error">You forgot to fill in this part of the form.</small>
                     </div>
                   </div>
                   
@@ -234,7 +227,7 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                           <option value="bald">Bald</option>
                         </select>
                       </label>
-                      <small class="error">Broke.</small>
+                      <small class="error">You forgot to fill in this part of the form.</small>
                     </div>
                   </div>      
                  
@@ -256,7 +249,7 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                           <option value="violet">Violet</option>
                         </select>
                       </label>
-                      <small class="error">Broke.</small>
+                      <small class="error">You forgot to fill in this part of the form.</small>
                     </div>
                   </div>
                 </div>
@@ -276,7 +269,7 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                           <option value="100+">100 or more</option>
                         </select>
                       </label>
-                      <small class="error">Broke.</small>
+                      <small class="error">You forgot to fill in this part of the form.</small>
                     </div>
                   </div>
             
@@ -302,58 +295,9 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                   <div class="large-4 columns">
                     <div class="row collapse">
                       <label for="regLength">Your length (CM) <small>required</small>
-                          <!--<input type="number" pattern="max_length" id="regLength" name="regLength" min="150" max="220" required>!-->
                           <input type="number" id="regLength" name="regLength" min="150" max="220" required>
                       </label>
-                      <small class="error">Broke.</small>
-                    </div>
-                  </div>
-                </div>
-            
-                <div class="row">
-                  <div class="large-4 columns">
-                    <div class="row collapse">
-                      <label for="regSmoker">You're a smoker? <small>required</small>
-                        <select id="regSmoker" name="regSmoker" class="medium" required>
-                          <option value="">Select your state</option>
-                          <option value="yes">Yes</option>
-                          <option value="sometimes">Sometimes, les than a pack per month</option>
-                          <option value="socially">Socially, more than a pack per month</option>
-                          <option value="never">Never</option>
-                        </select>
-                      </label>
-                      <small class="error">Broke.</small>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="row">
-                  <div class="large-4 columns">
-                    <div class="row collapse">
-                      <label for="regSsize">Your shoe size (EU)
-                        <select id="regSsize" name="regSsize" class="medium" required>
-                          <option value="">Select your shoe size in eu</option>
-                          <option value="34">34</option>
-                          <option value="35">35</option>
-                          <option value="36">36</option>
-                          <option value="37">37</option>
-                          <option value="38">38</option>
-                          <option value="39">39</option>
-                          <option value="40">40</option>
-                          <option value="41">41</option>
-                          <option value="42">42</option>
-                          <option value="43">43</option>
-                          <option value="44">44</option>
-                          <option value="45">45</option>
-                          <option value="46">46</option>
-                          <option value="47">47</option>
-                          <option value="48">48</option>
-                          <option value="49">49</option>
-                          <option value="50">50</option>
-                          <option value="51">51</option>
-                        </select>
-                      </label>
-                      <small class="error">Broke.</small>
+                      <small class="error">You forgot to fill in this part of the form.</small>
                     </div>
                   </div>
                 </div>
@@ -372,7 +316,7 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                 
             </form>               
                 <?php
-		}
+		};
 ?>
     <div id="csvForm" class="reveal-modal" data-reveal><h2>Add a new user.</h2>
         <p>Upload new csv by browsing to file and clicking on Upload</p>
@@ -403,33 +347,191 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
               <th>Weigth</th>
               <th>Length</th>
               <th>Body type</th>
-              <th>Shoe size</th>
-              <th>Smoker</th>
             </tr>
           </thead>
           <tbody>
             <tr>
             <?php
 				foreach ($stmtData as $user) {
-					echo '<td>'.$user['regAge'] . '</td>';
-					echo '<td>'.$user['regSex'] . '</td>';
-					echo '<td>'.$user['regHcolor'] . '</td>';
-					echo '<td>'.$user['regEcolor'] . '</td>';
-					echo '<td>'.$user['regHlength'] . '</td>';
-					echo '<td>'.$user['regWeigth'] . '</td>';
-					echo '<td>'.$user['regBody'] . '</td>';
-					echo '<td>'.$user['regLength'] . '</td>';
-					echo '<td>'.$user['regSmoker'] . '</td>';
-					echo '<td>'.$user['regSsize'] . '</td>';
+					$userAge = $user['regAge'];
+					$userGender = $user['regSex'];
+					$userHcolor = $user['regHcolor'];
+					$userHlength = $user['regHlength'];
+					$userEcolor = $user['regEcolor'];
+					$userWeigth = $user['regWeigth'];
+					$userLength = $user['regLength'];
+					$userBody = $user['regBody'];
+									
 				}
+					echo '<td>'.$userAge . '</td>';
+					echo '<td>'.$userGender . '</td>';
+					echo '<td>'.$userHcolor . '</td>';
+					echo '<td>'.$userHlength . '</td>';
+					echo '<td>'.$userEcolor . '</td>';
+					echo '<td>'.$userWeigth . '</td>';
+					echo '<td>'.$userLength . '</td>';
+					echo '<td>'.$userBody . '</td>';
 			?>
             </tr>
           </tbody>
         </table>
+		<a href="#" data-reveal-id="updateModal" class="button secondary">Edit</a>
+        <div id="updateModal" class="reveal-modal" data-reveal aria-labelledby="firstModalTitle" aria-hidden="true" role="dialog">
+          <h2 id="firstModalTitle">Update your userdata.</h2>
+          <?php var_dump($user['regAge']) ?>
+             <form data-abide method="post" action="updateData.php"> 
+                     
+                <div class="row">
+                  <div class="large-4 columns">
+                    <div class="row collapse">
+                      <label for="regSex">Your gender <small>required</small>
+                        <select id="regSex" name="updateSex" class="medium" required>
+                          <option value="">Select your gender</option>
+                          <option <?php if($userGender=='female'){ echo 'selected';}; ?> value="female">Female</option>
+                          <option <?php if($userGender=='male'){ echo 'selected'; }; ?> value="male">Male</option>
+                          <option value="both">Both</option>
+                        </select>
+                      </label>
+                      <small class="error">You forgot to fill in this part of the form.</small>
+                    </div>
+                  </div>
+                </div>
+            
+                <div class="row">
+                  <div class="large-4 columns">
+                    <div class="row collapse">
+                      <label for="regAge">Your age <small>required</small>
+                      <?php
+						$age = $user['regAge'];
+						echo '<input id="updateAge" name="updateAge" pattern="max_age" class="medium" type="number" size="6" min="18" max="99" value="'.$age.'">';					  
+					  ?>
+                      </label>
+                      <small class="error">You forgot to fill in this part of the form.</small>
+                    </div>
+                  </div>
+                </div>
+            
+                <div class="row">
+                  <div class="large-4 columns">
+                    <div class="row collapse">
+                      <label for="updateHcolor">Your hair color <small>required</small>
+                        <select id="updateHcolor" name="updateHcolor" class="medium" required>
+                          <option value="">Select your hair color</option>
+                          <option <?php if($userHcolor=='auburn'){ echo 'selected';}; ?> value="auburn">Auburn</option>
+                          <option <?php if($userHcolor=='black'){ echo 'selected';}; ?> value="black">Black</option>
+                          <option <?php if($userHcolor=='blond'){ echo 'selected';}; ?> value="blond">Blond</option>
+                          <option <?php if($userHcolor=='brown'){ echo 'selected';}; ?> value="brown">Brown</option>
+                          <option <?php if($userHcolor=='chestnut'){ echo 'selected';}; ?> value="chestnut">Chestnut</option>
+                          <option <?php if($userHcolor=='greywhite'){ echo 'selected';}; ?> value="greywhite">Grey/White</option>
+                          <option <?php if($userHcolor=='red'){ echo 'selected';}; ?> value="red">Red</option>
+                        </select>
+                      </label>
+                      <small class="error">You forgot to fill in this part of the form.</small>
+                    </div>
+                  </div>
+                  
+                  <div class="large-4 left columns">
+                    <div class="row collapse">
+                      <label for="updateHlength">Your hair length <small>required</small>
+                        <select id="updateHlength" name="updateHlength" class="medium" required>
+                          <option value="">Select your hair length</option>
+                          <option <?php if($userHlength=='long'){ echo 'selected';}; ?> value="long">Long</option>
+                          <option <?php if($userHlength=='medium'){ echo 'selected';}; ?> value="medium">Medium</option>
+                          <option <?php if($userHlength=='short'){ echo 'selected';}; ?> value="short">Short</option>
+                          <option <?php if($userHlength=='bald'){ echo 'selected';}; ?> value="bald">Bald</option>
+                        </select>
+                      </label>
+                      <small class="error">You forgot to fill in this part of the form.</small>
+                    </div>
+                  </div>      
+                 
+                </div>
+            
+                <div class="row">
+                  <div class="large-4 columns">
+                    <div class="row collapse">
+                      <label for="updateEcolor">Your eye color <small>required</small>
+                        <select id="updateEcolor" name="updateEcolor" class="medium" required>
+                          <option value="">Select your eye color</option>
+                          <option <?php if($userEcolor=='amber'){ echo 'selected';}; ?> value="amber">Amber</option>
+                          <option <?php if($userEcolor=='blue'){ echo 'selected';}; ?> value="blue">Blue</option>
+                          <option <?php if($userEcolor=='brown'){ echo 'selected';}; ?> value="brown">Brown</option>
+                          <option <?php if($userEcolor=='grey'){ echo 'selected';}; ?> value="grey">grey</option>
+                          <option <?php if($userEcolor=='green'){ echo 'selected';}; ?> value="green">Green</option>
+                          <option <?php if($userEcolor=='hazel'){ echo 'selected';}; ?> value="hazel">Hazel</option>
+                          <option <?php if($userEcolor=='red'){ echo 'selected';}; ?> value="red">Red</option>
+                          <option <?php if($userEcolor=='violet'){ echo 'selected';}; ?> value="violet">Violet</option>
+                        </select>
+                      </label>
+                      <small class="error">You forgot to fill in this part of the form.</small>
+                    </div>
+                  </div>
+                </div>
+            
+                <div class="row">
+                  <div class="large-4 columns">
+                    <div class="row collapse">
+                      <label for="updateWeigth">Your weigth <small>required</small>
+                        <select id="updateWeigth" name="updateWeigth" class="medium" required>
+                          <option value="">Select your weigth in kg</option>
+                          <option <?php if($userWeigth <= 60){ echo 'selected';}; ?> value="50-60">60 or less</option>
+                          <option <?php if($userWeigth >= 61 && $userWeigth <= 70){ echo 'selected';}; ?> value="60-70">60-70</option>
+                          <option <?php if($userWeigth >= 71 && $userWeigth <= 80){ echo 'selected';}; ?> value="70-80">70-80</option>
+                          <option <?php if($userWeigth >= 81 && $userWeigth <= 90){ echo 'selected';}; ?> value="80-90">80-90</option>
+                          <option <?php if($userWeigth >= 91 && $userWeigth <= 100){ echo 'selected';}; ?> value="90-100">90-100</option>
+                          <option <?php if($userWeigth >= 101 && $userWeigth <= 110){ echo 'selected';}; ?> value="100-110">100-110</option>
+                          <option <?php if($userWeigth >= 110){ echo 'selected';}; ?> value="100+">100 or more</option>
+                        </select>
+                      </label>
+                      <small class="error">You forgot to fill in this part of the form.</small>
+                    </div>
+                  </div>
+            
+                  <div class="large-4 left columns">
+                    <div class="row collapse">
+                      <label for="updateBody">Your body type <small>required</small>
+                        <select id="updateBody" name="updateBody" class="medium" required>
+                          <option value="">Select your body type</option>
+                          <option <?php if($userBody=='normal'){ echo 'selected';}; ?> value="normal">Normal</option>
+                          <option <?php if($userBody=='slim'){ echo 'selected';}; ?> value="slim">Slim</option>
+                          <option <?php if($userBody=='halfslim'){ echo 'selected';}; ?> value="halfslim">Half-slim</option>
+                          <option <?php if($userBody=='athletic'){ echo 'selected';}; ?> value="athletic">Athletic</option>
+                          <option <?php if($userBody=='chubby'){ echo 'selected';}; ?> value="chubby">Chubby</option>
+                          <option <?php if($userBody=='beefy'){ echo 'selected';}; ?> value="beefy">Beefy</option>
+                        </select>
+                      </label>
+                      <small class="error">Broke.</small>
+                    </div>
+                  </div>
+                </div>
+            
+                <div class="row">
+                  <div class="large-4 columns">
+                    <div class="row collapse">
+                      <label for="updateLength">Your length (CM) <small>required</small>
+                        <?php
+                        $length = $user['regLength'];
+						echo '<input type="number" id="updateLength" name="updateLength" min="150" max="220" value="'.$length.'" required>';
+						?>
+                      </label>
+                      <small class="error">You forgot to fill in this part of the form.</small>
+                    </div>
+                  </div>
+                </div>
+                            
+                <div class="row">
+                  <div class="large-12 columns">
+                    <button type="submit" class="medium button green">Update</button>
+                  </div>
+                </div>
+                
+            </form> 
+          <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        </div>
     </div>
   </section>
   <?php
-	}
+	};
 			
 			?>
 </section>

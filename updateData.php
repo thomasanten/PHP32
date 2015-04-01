@@ -15,20 +15,14 @@ function decrypt($string){
 }
 
 // Collect these Session data and save it into vars.
-$userid		= $_SESSION['userid'];
-$username	= $_SESSION['username'];
-$regSex		= $_POST['regSex']; 
-$regAge		= $_POST['regAge']; 
-$regHcolor	= $_POST['regHcolor']; 
-$regEcolor	= $_POST['regEcolor']; 
-$regHlength	= $_POST['regHlength']; 
-$regWeigth	= $_POST['regWeigth']; 
-$regBody	= $_POST['regBody']; 
-$regLength	= $_POST['regLength']; 
-$regSmoker	= $_POST['regSmoker']; 
-$regSsize	= $_POST['regSsize'];
-// Check if this specific post isn't set
-if(!isset($_POST['regRemarks'])){ $regRemarks = 'Geen omschrijving!';}else{ $regRemarks = $_POST['regRemarks'];}	
+$updateSex		= $_POST['updateSex']; 
+$updateAge		= $_POST['updateAge']; 
+$updateHcolor	= $_POST['updateHcolor']; 
+$updateEcolor	= $_POST['updateEcolor']; 
+$updateHlength	= $_POST['updateHlength']; 
+$updateWeigth	= $_POST['updateWeigth']; 
+$updateBody		= $_POST['updateBody']; 
+$updateLength	= $_POST['updateLength']; 
 
 ?>
 <!doctype html>
@@ -75,8 +69,7 @@ if(!isset($_POST['regRemarks'])){ $regRemarks = 'Geen omschrijving!';}else{ $reg
 	$stmtNo	=	$stmt->rowCount(); // Counting the rows that match the given parameters; username
 
 	if($stmtNo <= 0){
-		$stmt = $dbh->prepare("INSERT INTO userData(
-					id,
+		$stmt = $dbh->prepare("UPDATE userData SET(
 					regSex,
 					regAge,
 					regHcolor,
@@ -85,29 +78,25 @@ if(!isset($_POST['regRemarks'])){ $regRemarks = 'Geen omschrijving!';}else{ $reg
 					regWeigth,
 					regBody,
 					regLength,
-					regRemarks
 					) VALUES (
-					:regId,
-					:regSex,
-					:regAge,
-					:regHcolor,
-					:regEcolor,
-					:regHlength,
-					:regWeigth,
-					:regBody,
-					:regLength,
-					:regRemarks)");
+					:updateSex,
+					:updateAge,
+					:updateHcolor,
+					:updateEcolor,
+					:updateHlength,
+					:updateWeigth,
+					:updateBody,
+					:updateLength)WHERE 'id' = :regId");
 												  
-		$stmt->bindParam(':regId', $userid);       
-		$stmt->bindParam(':regSex', $regSex);
-		$stmt->bindParam(':regAge', $regAge); 
-		$stmt->bindParam(':regHcolor', $regHcolor);
-		$stmt->bindParam(':regEcolor', $regEcolor);       
-		$stmt->bindParam(':regHlength', $regHlength);
-		$stmt->bindParam(':regWeigth', $regWeigth); 
-		$stmt->bindParam(':regBody', $regBody);
-		$stmt->bindParam(':regLength', $regLength);       
-		$stmt->bindParam(':regRemarks', $regRemarks);
+		$stmt->bindParam(':regId', $updateid);       
+		$stmt->bindParam(':updateSex', $updateSex);
+		$stmt->bindParam(':updateAge', $updateAge); 
+		$stmt->bindParam(':updateHcolor', $updateHcolor);
+		$stmt->bindParam(':updateEcolor', $updateEcolor);       
+		$stmt->bindParam(':updateHlength', $updateHlength);
+		$stmt->bindParam(':updateWeigth', $updateWeigth); 
+		$stmt->bindParam(':updateBody', $updateBody);
+		$stmt->bindParam(':updateLength', $updateLength);       
 	
 		if ($stmt->execute()){
           	?> 
