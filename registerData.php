@@ -25,8 +25,6 @@ $regHlength	= $_POST['regHlength'];
 $regWeigth	= $_POST['regWeigth']; 
 $regBody	= $_POST['regBody']; 
 $regLength	= $_POST['regLength']; 
-$regSmoker	= $_POST['regSmoker']; 
-$regSsize	= $_POST['regSsize'];
 // Check if this specific post isn't set
 if(!isset($_POST['regRemarks'])){ $regRemarks = 'Geen omschrijving!';}else{ $regRemarks = $_POST['regRemarks'];}	
 

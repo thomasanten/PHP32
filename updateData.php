@@ -1,8 +1,8 @@
 <?php
 include 'library.php';
-/*if(isset($_SESSION['userid']) && $_SESSION['userid'] != ''){ // Redirect to secured user page if user logged in
+if(!isset($_POST['updateSex'])){ // Redirect to secured user page if user logged in
 	echo '<script type="text/javascript">window.location = "userpage.php"; </script>';
-}*/
+}
 
 // Encrypt the password 3 times
 function encrypt($string){	
@@ -15,6 +15,7 @@ function decrypt($string){
 }
 
 // Collect these Session data and save it into vars.
+$userid			= $_SESSION['userid'];
 $updateSex		= $_POST['updateSex']; 
 $updateAge		= $_POST['updateAge']; 
 $updateHcolor	= $_POST['updateHcolor']; 
@@ -63,59 +64,42 @@ $updateLength	= $_POST['updateLength'];
  
 	<section class="row fullWidth bgwhite">
     <?php		
-	$stmt = $dbh->prepare('SELECT * FROM userData WHERE id=:userid');
-	$stmt->bindParam(":userid",$userid);
-	$stmt->execute();
-	$stmtNo	=	$stmt->rowCount(); // Counting the rows that match the given parameters; username
+	$stmt2 = $dbh->prepare('SELECT * FROM userData WHERE id=:userid');
+	$stmt2->bindParam(":userid",$userid);
+	$stmt2->execute();
+	$stmtNo2	=	$stmt2->rowCount(); // Counting the rows that match the given parameters; username
 
-	if($stmtNo <= 0){
-		$stmt = $dbh->prepare("UPDATE userData SET(
-					regSex,
-					regAge,
-					regHcolor,
-					regEcolor,
-					regHlength,
-					regWeigth,
-					regBody,
-					regLength,
-					) VALUES (
-					:updateSex,
-					:updateAge,
-					:updateHcolor,
-					:updateEcolor,
-					:updateHlength,
-					:updateWeigth,
-					:updateBody,
-					:updateLength)WHERE 'id' = :regId");
+	if($stmtNo2 > 0 && isset($_POST['updateSex'])){
+		$stmt2 = $dbh->prepare("UPDATE userData SET regSex = :updateSex, regAge = :updateAge, regHcolor = :updateHcolor, regEcolor = :updateEcolor, regHlength = :updateHlength, regWeigth = :updateWeigth, regBody = :updateBody, regLength = :updateLength WHERE id = :regId");
 												  
-		$stmt->bindParam(':regId', $updateid);       
-		$stmt->bindParam(':updateSex', $updateSex);
-		$stmt->bindParam(':updateAge', $updateAge); 
-		$stmt->bindParam(':updateHcolor', $updateHcolor);
-		$stmt->bindParam(':updateEcolor', $updateEcolor);       
-		$stmt->bindParam(':updateHlength', $updateHlength);
-		$stmt->bindParam(':updateWeigth', $updateWeigth); 
-		$stmt->bindParam(':updateBody', $updateBody);
-		$stmt->bindParam(':updateLength', $updateLength);       
+		$stmt2->bindParam(':regId', $userid);       
+		$stmt2->bindParam(':updateSex', $updateSex);
+		$stmt2->bindParam(':updateAge', $updateAge); 
+		$stmt2->bindParam(':updateHcolor', $updateHcolor);
+		$stmt2->bindParam(':updateEcolor', $updateEcolor);       
+		$stmt2->bindParam(':updateHlength', $updateHlength);
+		$stmt2->bindParam(':updateWeigth', $updateWeigth); 
+		$stmt2->bindParam(':updateBody', $updateBody);
+		$stmt2->bindParam(':updateLength', $updateLength);       
 	
-		if ($stmt->execute()){
+		if ($stmt2->execute()){
           	?> 
           	<section class="row fullWidth">
                 <div class="small-10 large-centered text-center columns">
                     <h2>Succes!</h2>
-                    <p>Registration was a success! We've now entered your data.</p>
-                    <p><a href="userpage.php" class="button">Go Back</a></p>
+                    <p>You've have updated your data.</p>
+                    <p><a href="userpage.php" class="button">Next</a></p>
                 </div>
             </section>
             <?php
-			$stmtResult = $stmt->fetch(PDO::FETCH_ASSOC);
+			$stmtResult = $stmt2->fetch(PDO::FETCH_ASSOC);
 			} else {
           	?> 
 			<section class="row fullWidth">
                 <div class="small-10 large-centered text-center columns">
                     <h2>OOOOops!</h2>
                     <p>Something went ugly wrong!</p>
-                    <p><a href="index.php" class="button">Go Back</a></p>
+                    <p><a href="userpage.php" class="button">Go Back</a></p>
                 </div>
             </section>
             <?php }
@@ -124,8 +108,8 @@ $updateLength	= $_POST['updateLength'];
           	<section class="row fullWidth">
                 <div class="small-10 large-centered text-center columns">
                     <h2>Error!</h2>
-                    <p>Registration wasn't a succes! This email address is already registered, use another one...</p>
-                    <p><a href="index.php" class="button">Go Back</a></p>
+                    <p>We're sorry, there is no data found in our database...</p>
+                    <p><a href="userpage.php" class="button">Go Back</a></p>
                 </div>
             </section>
         <?php } ?>

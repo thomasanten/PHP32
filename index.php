@@ -256,7 +256,7 @@ include 'library.php';
 
 				// 	Get Weigth		
 				$.each(data, function(i, val) {
-					if(val.regWeigth >= 50 && val.regWeigth <= 60) {
+					if(val.regWeigth <= 59) {
 						value = '50-60';
 						if (!counts.hasOwnProperty(value)) {
 							counts[value] = 1;
@@ -264,7 +264,7 @@ include 'library.php';
 							counts[value]++;
 						  }
 					  }
-					if(val.regWeigth >= 61 && val.regWeigth <= 70) {
+					if(val.regWeigth >= 60 && val.regWeigth <= 69) {
 						value = '60-70';
 						if (!counts.hasOwnProperty(value)) {
 							counts[value] = 1;
@@ -272,7 +272,7 @@ include 'library.php';
 							counts[value]++;
 						  }
 					  }
-					if(val.regWeigth >= 71 && val.regWeigth <= 80) {
+					if(val.regWeigth >= 70 && val.regWeigth <= 79) {
 						value = '70-80';
 						if (!counts.hasOwnProperty(value)) {
 							counts[value] = 1;
@@ -280,7 +280,7 @@ include 'library.php';
 							counts[value]++;
 						  }
 					  }
-					if(val.regWeigth >= 81 && val.regWeigth <= 90) {
+					if(val.regWeigth >= 80 && val.regWeigth <= 89) {
 						value = '80-90';
 						if (!counts.hasOwnProperty(value)) {
 							counts[value] = 1;
@@ -288,7 +288,7 @@ include 'library.php';
 							counts[value]++;
 						  }
 					  }
-					if(val.regWeigth >= 91 && val.regWeigth <= 100) {
+					if(val.regWeigth >= 90 && val.regWeigth <= 99) {
 						value = '90-100';
 						if (!counts.hasOwnProperty(value)) {
 							counts[value] = 1;
@@ -296,7 +296,15 @@ include 'library.php';
 							counts[value]++;
 						  }
 					  }
-					if(val.regWeigth >= 101) {
+					if(val.regWeigth >= 100 && val.regWeigth <= 109) {
+						value = '100-110';
+						if (!counts.hasOwnProperty(value)) {
+							counts[value] = 1;
+						  } else {
+							counts[value]++;
+						  }
+					  }
+					if(val.regWeigth >= 110) {
 						value = '100+';
 						if (!counts.hasOwnProperty(value)) {
 							counts[value] = 1;
@@ -381,7 +389,7 @@ include 'library.php';
 					});	
 					var weigth = document.getElementById("chart-weigth").getContext("2d");
 					window.myDoughnut = new Chart(weigth).Doughnut(doughnutData, {responsive : true});		
-
+					
 			},
 			error: function (jqXHR, textStatus, errorThrown)
 			{

@@ -25,8 +25,6 @@ $regLname	= $_POST['regLname'];
 	$regWeigth	= $_POST['regWeigth']; 
 	$regBody	= $_POST['regBody']; 
 	$regLength	= $_POST['regLength']; 
-	$regSmoker	= $_POST['regSmoker']; 
-	$regSsize	= $_POST['regSsize']; 
 	if(!isset($_POST['regRemarks'])){ $regRemarks = 'Geen omschrijving!';}else{ $regRemarks = $_POST['regRemarks'];}	
 }
 
